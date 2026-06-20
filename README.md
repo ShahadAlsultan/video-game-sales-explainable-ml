@@ -19,27 +19,6 @@ The core emphasis of this project is **Rigorous Benchmarking** and **Explainable
 * **Medium Sales Tier**: $1.0 - 5.0$ Million units sold.
 * **High Sales Tier**: $> 5.0$ Million units sold.
 
----
-
-## 🛠️ Repository Structure
-
-```text
-```
-├── video_game_classifier.py            # Main end-to-end pipeline (Phases 1-8)
-├── regional_shap_per_class.py          # Standalone regional class-specific SHAP analysis
-├── run_ablation_only.py                # Standalone feature ablation testing script
-├── run_all_features_benchmark.py       # Benchmark comparing V1, V2, and V3 feature sets
-├── run_sales_features_benchmark.py     # Benchmark testing regional sales leakage (V4/V5)
-├── run_feature_selection_benchmark.py  # RF-based SelectFromModel validation
-├── run_xgb_feature_selection_benchmark.py # XGBoost-based feature selection validation
-├── run_shap_phases.py                  # Standalone runner for fast SHAP analysis execution
-├── requirements.txt                    # Project dependencies and constraints
-└── SPEC.md                             # Detailed engineering and technical specifications
-
-
-
-
-
 
 
 # Detailed engineering and technical specifications
