@@ -23,7 +23,8 @@ The core emphasis of this project is **Rigorous Benchmarking** and **Explainable
 
 ## 🛠️ Repository Structure
 
-```text```
+```text
+```
 ├── video_game_classifier.py            # Main end-to-end pipeline (Phases 1-8)
 ├── regional_shap_per_class.py          # Standalone regional class-specific SHAP analysis
 ├── run_ablation_only.py                # Standalone feature ablation testing script
@@ -34,6 +35,14 @@ The core emphasis of this project is **Rigorous Benchmarking** and **Explainable
 ├── run_shap_phases.py                  # Standalone runner for fast SHAP analysis execution
 ├── requirements.txt                    # Project dependencies and constraints
 └── SPEC.md                             # Detailed engineering and technical specifications
+
+
+
+
+
+
+
+# Detailed engineering and technical specifications
 
 📊 Pipeline Architecture (Phases)
 
