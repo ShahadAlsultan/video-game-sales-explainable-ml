@@ -1,11 +1,11 @@
-# Video Game Sales-Level Classification & Regional Explainable ML Pipeline
+# 🎮 Video Game Sales-Level Classification & Regional Explainable ML Pipeline
 
 [![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
 [![ML Framework](https://img.shields.io/badge/scikit--learn-1.2.0%2B-orange.svg)](https://scikit-learn.org/)
 [![XGBoost](https://img.shields.io/badge/xgboost-1.6.0%2B-green.svg)](https://xgboost.readthedocs.io/)
 [![Explainability](https://img.shields.io/badge/SHAP-0.41.0%2B-purple.svg)](https://shap.readthedocs.io/)
 
-> **IMPORTANT FRAMING**: This is a **post-release classification system** using rating, review, and engagement metadata collected *after* a game has shipped. It is **NOT** a pre-launch forecasting tool. 
+> ⚠️ **IMPORTANT FRAMING**: This is a **post-release classification system** using rating, review, and engagement metadata collected *after* a game has shipped. It is **NOT** a pre-launch forecasting tool. 
 
 ---
 
@@ -23,7 +23,6 @@ The core emphasis of this project is **Rigorous Benchmarking** and **Explainable
 
 ## 🛠️ Repository Structure
 
-```text
 ├── video_game_classifier.py            # Main end-to-end pipeline (Phases 1-8)
 ├── regional_shap_per_class.py          # Standalone regional class-specific SHAP analysis
 ├── run_ablation_only.py                # Standalone feature ablation testing script
@@ -34,3 +33,67 @@ The core emphasis of this project is **Rigorous Benchmarking** and **Explainable
 ├── run_shap_phases.py                  # Standalone runner for fast SHAP analysis execution
 ├── requirements.txt                    # Project dependencies and constraints
 └── SPEC.md                             # Detailed engineering and technical specifications
+
+📊 Pipeline Architecture (Phases)
+
+The main workflow (video_game_classifier.py) orchestrates 8 structured phases:
+
+    🧹 Phase 1: Data Cleaning: Strict handling of missing values, category grouping for long-tail publishers, and robust data type casting.
+
+    📉 Phase 2: Exploratory Data Analysis (EDA): Generation of 10 comprehensive visualization plots exploring distributions, correlations, and genre/platform trends.
+
+    ⚙️ Phase 3: Preprocessing: Stratified train/test split (80/20) and a robust ColumnTransformer scaling numerical features and one-hot encoding categorical attributes.
+
+    🔍 Phase 4: Hyperparameter Tuning: Full GridSearchCV optimized via Macro F1-score across 4 core classifiers (Logistic Regression, Decision Trees, Random Forests, XGBoost).
+
+    📈 Phase 5: Model Evaluation: Metrics breakdown (Accuracy, Precision, Recall, F1 Macro, and OvR ROC-AUC) along with multi-class Confusion Matrices and ROC Curves.
+
+    🔬 Phase 6: Feature Ablation Study: Dynamically quantifies the exact marginal drop in predictive power when isolating post-release rating/count matrices.
+
+    💡 Phase 7: Global Explainability (SHAP): Extracts Tree-based SHAP summary graphs and marginal dependency plots to decode the top global performance signals.
+
+    🌍 Phase 8: Regional Sales Analysis: Isolates models trained strictly on regional sub-markets (North America, Europe, Japan) to map geographic variations in consumer behavior.
+
+⚡ Quick Start & Setup
+1. Prerequisites
+
+Ensure you have Python 3.9+ installed. Clone this repository and install the constrained dependencies:
+Bash
+
+pip install -r requirements.txt
+
+2. Dataset Acquisition
+
+    Download the Video Games Sales with Ratings dataset from Kaggle: rush4ratio/video-game-sales-with-ratings.
+
+    Place the unzipped CSV file (Video_Games_Sales_as_at_22_Dec_2016.csv) directly into the root of this project directory.
+
+3. Execution
+
+To run the full end-to-end architecture (including full grid searches, EDA plot rendering, and SHAP calculations):
+Bash
+
+python video_game_classifier.py
+
+Expected wall-clock time is between 5–20 minutes depending on your available CPU core count (GridSearchCV utilizes n_jobs=-1).
+📈 Key Experiments & Standalone Benchmarks
+
+The project includes specialized standalone evaluation drivers to analyze model behavior:
+
+    ✨ Feature Engineering Tiers (run_all_features_benchmark.py): Evaluates basic metadata (V1) against extended features including Developers (V2) and Developer + Text Mining on Game Titles using TF-IDF vectorization (V3).
+
+    🚰 Data Leakage Auditing (run_sales_features_benchmark.py): Demonstrates the impact of data leakage by injecting regional sales columns (V4/V5) to highlight performance inflation against non-leaky models.
+
+    🎯 Feature Selection Check (run_feature_selection_benchmark.py / run_xgb_feature_selection_benchmark.py): Audits whether automated dimensionality reduction (SelectFromModel via Random Forest or XGBoost feature importances) preserves or degrades overall multi-class Macro F1 boundaries.
+
+🗂️ Generated Outputs
+
+All outputs are automatically structured into the following runtime-generated directories:
+
+    outputs/eda/: Contains 10 PNG plots tracking target distributions, boxplots, heatmaps, and counts by platform or genre.
+
+    outputs/models/: Holds optimized hyperparameter profiles (best_params.json), performance spreadsheets (model_comparison.csv), Multi-class Confusion Matrices, and ROC curves for champion models.
+
+    outputs/shap/: Features global TreeExplainer summary plots and dependency charts mapping behavior.
+
+    outputs/shap_regional_per_class/: Regional matrix mapping 9 combinations of unique sales behaviors per class across geographic boundaries.
